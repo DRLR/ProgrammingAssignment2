@@ -1,3 +1,8 @@
+###Comment from DRLR
+This is a FORK for the Coursera course "rprog-002".
+The comment is introduced by DRLR!
+
+
 ### Introduction
 
 This second programming assignment will require you to write an R

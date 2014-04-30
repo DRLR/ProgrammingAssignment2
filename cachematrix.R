@@ -12,15 +12,11 @@ makeCacheMatrix <- function(x = matrix()) {
                 }
         ##use the function
         get <- function() x
-        #
-        setmean <- function(mean) m <<- mean
-        getmean <- function() m
-        ##reorder all rows using rev. FOR MORE INFO SEE ?REV
-        list <- apply(data, 2, rev)
-        ##make the matrix m from the list
-        m <- as.matrix(list)
-        #return results
-        m
+        #prepare the Inverse
+        setMatInv <- function(MatInv) m <<- MatInv
+        getMatInv <- function() m
+        ##set ivaribales of the list for the next function
+        list(set = set, get = get, setMatInv = setMatInv, getMatInv = getMatInv)
 }
 
 
@@ -28,7 +24,7 @@ makeCacheMatrix <- function(x = matrix()) {
 cacheSolve <- function(x, ...) {
         ## Return a matrix that is the inverse of 'x'
         ## query the x vector's cache 
-        m <- x$getmean()
+        m <- x$getMatInv()
         ##If the matrix m contains something statement is fullfilled
         if(!is.null(m)) {
                 ##Therefore, we return a message and the matrix
@@ -37,8 +33,10 @@ cacheSolve <- function(x, ...) {
         }
         ##get the data for invers ordering
         data <- x$get()
-        ##make the matrix m from the list
-        m <- as.matrix(data)
+        ##solve the matrix m 
+        m <- solve(data, ...)
+        #you have to set x as the new inversee matrix
+        x$setMatInv(m)
         #return results
         m
 }
